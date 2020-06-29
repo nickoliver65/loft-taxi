@@ -5,72 +5,55 @@ import { Map } from './Map';
 import { Profile } from './Profile';
 import './App.css';
 
-const PAGES = {
-  login: <Login />,
-  registration: <Registration />,
-  map: <Map />,
-  profile: <Profile />
+export const ActionBtn = (props) =>
+{
+  return (<div>
+    <button onClick = {props.onClick}>
+      {props.placeholder}
+      </button>
+  </div>)
 }
 
 class App extends React.Component {
 
   state = { currentPage: "login" }
 
-  navigateTo = page => {
-    this.setState({ currentPage: page })
+  renderPage = (page) =>
+  {
+    if(page == "login")
+    {
+      return <Login navigateTo = {this.navigateTo}  />
+    }
+    else if(page == "registration")
+    {
+      return <Registration navigateTo = {this.navigateTo}  />
+    }
+    else if(page == "map")
+    {
+      return <Map navigateTo = {this.navigateTo}  />
+    }
+    else if(page == "profile")
+    {
+      return <Profile navigateTo = {this.navigateTo}  />
+    }
   }
 
-  makeActualBtn = (type,placeholder) => {
-    return <div>
-      <button
-        onClick={() => {
-          this.navigateTo(type)
-        }}
-      >
-        {placeholder}
-        </button>
-    </div>
+  navigateTo = page => {
+    this.setState({ currentPage: page })
   }
 
   drawHeader = () =>
   {
     return <div>
-      {this.makeActualBtn("login","Выйти")}
-      {this.makeActualBtn("profile","Профиль")}
-      {this.makeActualBtn("map","Карта")}
+      <ActionBtn placeholder = {"Выйти"} onClick = {()=>this.navigateTo("login")}/>
+      <ActionBtn placeholder = {"Профиль"} onClick = {()=>this.navigateTo("profile")}/>
+      <ActionBtn placeholder = {"Карта"} onClick = {()=>this.navigateTo("map")}/>
     </div>
   }
 
-  makeListOfBtn = () => {
-    
-    let actual_type = this.state.currentPage;
-    
-    switch (actual_type) {
-      case "login":
-        {
-          return <div>
-            {this.makeActualBtn("map","Вход")}
-            {this.makeActualBtn("registration","Зарегистрируйтесь")}
-          </div>
-        }
-        break; 
-        case "registration":
-          {
-            return <div>
-              {this.makeActualBtn("map","Вход")}
-            </div>
-          }
-          break;        
-      default:
-        return false;
-    }  
-
-  }
   makePlaceholderElements = () => {
     
-    let actual_type = this.state.currentPage;
-    
-    if(actual_type == "map" || actual_type == "profile")
+    if(this.state.currentPage == "map" || this.state.currentPage == "profile")
     {
       return <div>
         {this.drawHeader()}   
@@ -85,10 +68,9 @@ class App extends React.Component {
         {this.makePlaceholderElements()}
           <section>
             {
-              PAGES[this.state.currentPage]
+              this.renderPage(this.state.currentPage)
             }
           </section>
-          {this.makeListOfBtn()}
           <div>actual state - {this.state.currentPage}</div>
         </main>
       </header>
