@@ -1,75 +1,75 @@
 import React from 'react';
-import { Login } from './Login';
 import { Registration } from './Registration';
 import { Map } from './Map';
-import { Profile } from './Profile';
+import { ProfileWithAuth } from './Profile';
 import './App.css';
+import { withAuth } from './AuthContext.jsx';
+import { LoginWithAuth } from './Login.jsx';
 
-export const ActionBtn = (props) =>
-{
+export const ActionBtn = (props) => {
   return (<div>
-    <button onClick = {props.onClick}>
+    <button onClick={props.onClick}>
       {props.placeholder}
-      </button>
+    </button>
   </div>)
+}
+
+const PAGES = {
+  login: (props) => <LoginWithAuth {...props} />,
+  map: (props) => <Map {...props} />,
+  profile: (props) => <ProfileWithAuth {...props} />,
+  registration: (props) => <Registration {...props} />
 }
 
 class App extends React.Component {
 
   state = { currentPage: "login" }
 
-  renderPage = (page) =>
-  {
-    if(page == "login")
-    {
-      return <Login navigateTo = {this.navigateTo}  />
-    }
-    else if(page == "registration")
-    {
-      return <Registration navigateTo = {this.navigateTo}  />
-    }
-    else if(page == "map")
-    {
-      return <Map navigateTo = {this.navigateTo}  />
-    }
-    else if(page == "profile")
-    {
-      return <Profile navigateTo = {this.navigateTo}  />
-    }
-  }
-
   navigateTo = page => {
-    this.setState({ currentPage: page })
+    if (this.props.isLoggedIn) {
+      this.setState({ currentPage: page })
+    }
+    else {
+      if (page == "registration") {
+        this.setState({ currentPage: "registration" })
+      }
+      else {
+        this.setState({ currentPage: "login" })
+      }
+
+    }
   }
 
-  drawHeader = () =>
-  {
+  unauthenticate = (event) => {
+    event.preventDefault();
+    this.props.logOut();
+    this.navigateTo("login");
+  };
+
+  drawHeader = () => {
     return <div>
-      <ActionBtn placeholder = {"Выйти"} onClick = {()=>this.navigateTo("login")}/>
-      <ActionBtn placeholder = {"Профиль"} onClick = {()=>this.navigateTo("profile")}/>
-      <ActionBtn placeholder = {"Карта"} onClick = {()=>this.navigateTo("map")}/>
+      <ActionBtn placeholder={"Выйти"} onClick={this.unauthenticate} />
+      <ActionBtn placeholder={"Профиль"} onClick={() => this.navigateTo("profile")} />
+      <ActionBtn placeholder={"Карта"} onClick={() => this.navigateTo("map")} />
     </div>
   }
 
   makePlaceholderElements = () => {
-    
-    if(this.state.currentPage == "map" || this.state.currentPage == "profile")
-    {
+
+    if (this.state.currentPage == "map" || this.state.currentPage == "profile") {
       return <div>
-        {this.drawHeader()}   
+        {this.drawHeader()}
       </div>
-    }    
+    }
   }
 
   render() {
     return <>
       <header>
         <main>
-        {this.makePlaceholderElements()}
+          {this.makePlaceholderElements()}
           <section>
-            {
-              this.renderPage(this.state.currentPage)
-            }
+            {PAGES[this.state.currentPage]({ navigate: this.navigateTo })}
           </section>
           <div>actual state - {this.state.currentPage}</div>
         </main>
@@ -78,6 +78,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth(App);
 
 //ex
