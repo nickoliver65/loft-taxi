@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { Component } from "react";
+import { withAuth } from "./AuthContext";
 
-export const Profile = () => {
-    return <>
-    Profile
-    </>
+export class Profile extends Component {
+
+    render() {
+        return (
+            <p>
+                Profile.
+            </p>
+        );
+    }
 }
-//ex
+
+export const ProfileWithAuth = withAuth(Profile);
