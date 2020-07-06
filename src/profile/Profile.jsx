@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withAuth } from "./AuthContext";
+import { withAuth } from "../AuthContext";
 
 export class Profile extends Component {
 
