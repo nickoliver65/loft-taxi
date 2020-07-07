@@ -1,10 +1,11 @@
 import React from 'react';
-import { Registration } from './Registration';
-import { Map } from './Map';
-import { ProfileWithAuth } from './Profile';
+import { Registration } from './registration/Registration';
+import { Map } from './map/Map';
+import { ProfileWithAuth } from './profile/Profile';
 import './App.css';
+import { PropTypes } from 'prop-types'
 import { withAuth } from './AuthContext.jsx';
-import { LoginWithAuth } from './Login.jsx';
+import { LoginWithAuth } from './login/Login.jsx';
 
 export const ActionBtn = (props) => {
   return (<div>
@@ -13,7 +14,7 @@ export const ActionBtn = (props) => {
     </button>
   </div>)
 }
-
+ 
 const PAGES = {
   login: (props) => <LoginWithAuth {...props} />,
   map: (props) => <Map {...props} />,
@@ -77,6 +78,12 @@ class App extends React.Component {
     </>;
   }
 }
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logIn: PropTypes.func,
+  navigate: PropTypes.func,
+};
 
 export default withAuth(App);
 

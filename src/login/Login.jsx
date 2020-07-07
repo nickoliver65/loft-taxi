@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from 'prop-types'
-import { withAuth } from "./AuthContext";
+import { withAuth } from "../AuthContext";
 
 export class Login extends Component {
     goToProfile = (event) => {
