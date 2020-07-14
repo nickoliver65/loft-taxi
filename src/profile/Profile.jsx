@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
+import { PropTypes } from 'prop-types'
 
 import { connect } from 'react-redux'
 import { saveCardInfo } from '../actions'
@@ -14,6 +16,13 @@ export class Profile extends Component {
         return (
 
             <>
+                <div>
+                    <nav>
+                        <Link to="/"><button>Home page</button></Link>
+                        <Link to="/map"><button>Map</button></Link>
+                        <Link to="/profile"><button>Profile</button></Link>
+                    </nav>
+                </div>
 
                 <form onSubmit={this.saveCardInfo}>
                     <h1>Профиль</h1>
@@ -33,11 +42,17 @@ export class Profile extends Component {
 
                     <button>Сохранить</button>
                 </form>
-                
+
             </>
         );
     }
 }
+
+Profile.propTypes = {
+    isLoggedIn: PropTypes.bool,
+    isCardSended: PropTypes.bool,
+    ProfileWithConnect: PropTypes.func
+};
 
 export const ProfileWithConnect = connect(
     (state) => ({ isLoggedIn: state.auth.isLoggedIn, isCardSended: state.auth.isCardSended }),

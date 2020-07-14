@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import mapboxgl from 'mapbox-gl'
+import { Link } from 'react-router-dom'
 
 export class Map extends Component {
     mapContainer = React.createRef();
@@ -22,9 +23,16 @@ export class Map extends Component {
 
     render() {
         return (
+            <>
+            <nav>
+                <Link to="/"><button>Home page</button></Link>
+                <Link to="/map"><button>Map</button></Link>
+                <Link to="/profile"><button>Profile</button></Link>
+            </nav>           
             <div className="map-wrapper">
                 <div data-testid="map" className="map" ref={this.mapContainer} />
             </div>
+            </>
         );
     }
 
