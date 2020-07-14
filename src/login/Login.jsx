@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { PropTypes } from 'prop-types'
-import { withAuth } from "../AuthContext";
+import { connect } from 'react-redux'
+import { authenticate } from '../actions'
+import { Link, Switch, Route } from 'react-router-dom'
+import {PrivateRoute} from '../privateRoute'
 
 export class Login extends Component {
     goToProfile = (event) => {
@@ -15,7 +18,7 @@ export class Login extends Component {
     authenticate = (event) => {
         event.preventDefault();
         const { email, password } = event.target;
-        this.props.logIn(email.value, password.value);
+        this.props.authenticate(email.value, password.value);
     };
 
     render() {
@@ -25,9 +28,9 @@ export class Login extends Component {
                     <p>
                         Вы благополучно авторизовались{" "}
                         <div></div>
-                        <button onClick={this.goToProfile}>
-                            Продолжить
-            </button>
+                        <nav>
+                            <Link to="/map"><button>Продолжить</button></Link>
+                        </nav>     
                     </p>
                 ) : (
                         <form onSubmit={this.authenticate}>
@@ -37,7 +40,7 @@ export class Login extends Component {
                             <input id="password" type="password" name="password" size="28" />
                             <button type="submit">Log in</button>
                             <div></div>
-                            <button onClick={this.goToRegistration} name='registration' type="registration">Зарегистрироваться</button>
+                            <Link to="/registration"><button name='registration' type="registration">Зарегистрироваться</button></Link>
                         </form>
                     )}
             </>
@@ -51,4 +54,7 @@ Login.propTypes = {
     navigate: PropTypes.func,
 };
 
-export const LoginWithAuth = withAuth(Login);
+export const LoginWithAuth = connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    { authenticate }
+)(Login)

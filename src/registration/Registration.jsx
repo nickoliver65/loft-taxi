@@ -1,5 +1,4 @@
 import React from 'react'
-import { ActionBtn } from '../App.js'
 
 export const Registration = (props) => {
     return <>

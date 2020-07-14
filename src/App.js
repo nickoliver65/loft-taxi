@@ -1,78 +1,38 @@
 import React from 'react';
 import { Registration } from './registration/Registration';
 import { Map } from './map/Map';
-import { ProfileWithAuth } from './profile/Profile';
+import { ProfileWithConnect } from './profile/Profile';
 import './App.css';
 import { PropTypes } from 'prop-types'
-import { withAuth } from './AuthContext.jsx';
+import { connect } from 'react-redux';
 import { LoginWithAuth } from './login/Login.jsx';
-
-export const ActionBtn = (props) => {
-  return (<div>
-    <button onClick={props.onClick}>
-      {props.placeholder}
-    </button>
-  </div>)
-}
- 
-const PAGES = {
-  login: (props) => <LoginWithAuth {...props} />,
-  map: (props) => <Map {...props} />,
-  profile: (props) => <ProfileWithAuth {...props} />,
-  registration: (props) => <Registration {...props} />
-}
+import { Link, Switch, Route } from 'react-router-dom'
+import {PrivateRoute} from './privateRoute'
 
 class App extends React.Component {
-
-  state = { currentPage: "login" }
-
-  navigateTo = page => {
-    if (this.props.isLoggedIn) {
-      this.setState({ currentPage: page })
-    }
-    else {
-      if (page == "registration") {
-        this.setState({ currentPage: "registration" })
-      }
-      else {
-        this.setState({ currentPage: "login" })
-      }
-
-    }
-  }
 
   unauthenticate = (event) => {
     event.preventDefault();
     this.props.logOut();
-    this.navigateTo("login");
   };
-
-  drawHeader = () => {
-    return <div>
-      <ActionBtn placeholder={"Выйти"} onClick={this.unauthenticate} />
-      <ActionBtn placeholder={"Профиль"} onClick={() => this.navigateTo("profile")} />
-      <ActionBtn placeholder={"Карта"} onClick={() => this.navigateTo("map")} />
-    </div>
-  }
-
-  makePlaceholderElements = () => {
-
-    if (this.state.currentPage == "map" || this.state.currentPage == "profile") {
-      return <div>
-        {this.drawHeader()}
-      </div>
-    }
-  }
 
   render() {
     return <>
       <header>
-        <main>
-          {this.makePlaceholderElements()}
+        <main>    
+          <nav>
+          <Link to="/"><button>Home page</button></Link>
+          <Link to="/map"><button>Map</button></Link>
+          <Link to="/profile"><button>Profile</button></Link>
+          </nav> 
           <section>
-            {PAGES[this.state.currentPage]({ navigate: this.navigateTo })}
-          </section>
-          <div>actual state - {this.state.currentPage}</div>
+            <Switch>
+              <Route exact path='/' component={LoginWithAuth} />
+              <PrivateRoute path='/map' component={Map} />
+              <PrivateRoute path='/profile' component={ProfileWithConnect} />
+              <Route path='/registration' component={Registration} />
+            </Switch>
+          </section>          
         </main>
       </header>
     </>;
@@ -85,6 +45,6 @@ App.propTypes = {
   navigate: PropTypes.func,
 };
 
-export default withAuth(App);
-
-//ex
+export default connect(
+  state => ({ isLoggedIn: state.auth.isLoggedIn })
+)(App);
