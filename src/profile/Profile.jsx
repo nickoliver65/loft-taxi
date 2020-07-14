@@ -4,6 +4,17 @@ import { PropTypes } from 'prop-types'
 
 import { connect } from 'react-redux'
 import { saveCardInfo } from '../actions'
+
+export const DrawMenuLinks = () => {
+    return (
+        <nav>
+            <Link to="/"><button>Home page</button></Link>
+            <Link to="/map"><button>Map</button></Link>
+            <Link to="/profile"><button>Profile</button></Link>
+        </nav>
+    )
+}
+
 export class Profile extends Component {
 
     saveCardInfo = (event) => {
@@ -17,11 +28,7 @@ export class Profile extends Component {
 
             <>
                 <div>
-                    <nav>
-                        <Link to="/"><button>Home page</button></Link>
-                        <Link to="/map"><button>Map</button></Link>
-                        <Link to="/profile"><button>Profile</button></Link>
-                    </nav>
+                    <DrawMenuLinks/>
                 </div>
 
                 <form onSubmit={this.saveCardInfo}>
