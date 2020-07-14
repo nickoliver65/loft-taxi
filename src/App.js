@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux';
 import { LoginWithAuth } from './login/Login.jsx';
 import { Link, Switch, Route } from 'react-router-dom'
-import {PrivateRoute} from './privateRoute'
+import { PrivateRoute } from './privateRoute'
 
 class App extends React.Component {
 
@@ -19,12 +19,7 @@ class App extends React.Component {
   render() {
     return <>
       <header>
-        <main>    
-          <nav>
-          <Link to="/"><button>Home page</button></Link>
-          <Link to="/map"><button>Map</button></Link>
-          <Link to="/profile"><button>Profile</button></Link>
-          </nav> 
+        <main>
           <section>
             <Switch>
               <Route exact path='/' component={LoginWithAuth} />
@@ -32,7 +27,7 @@ class App extends React.Component {
               <PrivateRoute path='/profile' component={ProfileWithConnect} />
               <Route path='/registration' component={Registration} />
             </Switch>
-          </section>          
+          </section>
         </main>
       </header>
     </>;

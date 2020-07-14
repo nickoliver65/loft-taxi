@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import { authenticate } from '../actions'
-import { Link, Switch, Route } from 'react-router-dom'
-import {PrivateRoute} from '../privateRoute'
+import { Link} from 'react-router-dom'
 
 export class Login extends Component {
     goToProfile = (event) => {
@@ -24,6 +23,7 @@ export class Login extends Component {
     render() {
         return (
             <>
+            {this.props.isLoginFail && <div>Your login/password is not valid</div>}
                 {this.props.isLoggedIn ? (
                     <p>
                         Вы благополучно авторизовались{" "}
@@ -50,11 +50,14 @@ export class Login extends Component {
 
 Login.propTypes = {
     isLoggedIn: PropTypes.bool,
+    isLoginFail: PropTypes.bool,
     logIn: PropTypes.func,
     navigate: PropTypes.func,
+    authenticate: PropTypes.func,
+    LoginWithAuth: PropTypes.func
 };
 
 export const LoginWithAuth = connect(
-    (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn,isLoginFail: state.auth.isLoginFail }),
     { authenticate }
 )(Login)
