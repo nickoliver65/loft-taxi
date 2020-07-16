@@ -1,4 +1,4 @@
-import { AUTHENTICATE, logIn, CARD_INFO, logFail, LOGIN_FAIL } from "../actions";
+import { AUTHENTICATE, logIn, CARD_INFO, logFail, LOGIN_FAIL,cardSended } from "../actions";
 import { serverLogIn, cardSend } from '../api'
 
 export const authMiddleware = (store) => (next) => async (action) => {
@@ -21,7 +21,7 @@ export const authMiddleware = (store) => (next) => async (action) => {
       if (success.success) {
         console.log(success);
         alert("success")
-        store.dispatch(logIn())
+        store.dispatch(cardSended())
       }
       else {
         alert("error")
