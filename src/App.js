@@ -1,45 +1,37 @@
 import React from 'react';
-import { Registration } from './registration/Registration';
-import { Map } from './map/Map';
-import { ProfileWithConnect } from './profile/Profile';
-import './App.css';
-import { PropTypes } from 'prop-types'
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { LoginWithAuth } from './login/Login.jsx';
-import { Link, Switch, Route } from 'react-router-dom'
-import { PrivateRoute } from './privateRoute'
+import PrivateRoute from './blocks/privateRoute/privateRoute';
 
-class App extends React.Component {
+import './css/app.css';
 
-  unauthenticate = (event) => {
-    event.preventDefault();
-    this.props.logOut();
-  };
+import Header from './blocks/header/header';
+import LoginPage from './pages/login/login';
+import RegisterPage from './pages/register/register';
+import MapPage from './pages/map/map';
+import ProfilePage from './pages/profile/profile';
 
-  render() {
-    return <>
-      <header>
-        <main>
-          <section>
-            <Switch>
-              <Route exact path='/' component={LoginWithAuth} />
-              <PrivateRoute path='/map' component={Map} />
-              <PrivateRoute path='/profile' component={ProfileWithConnect} />
-              <Route path='/registration' component={Registration} />
-            </Switch>
-          </section>
-        </main>
-      </header>
-    </>;
-  }
-}
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logIn: PropTypes.func,
-  navigate: PropTypes.func,
+const App = ({ isAuthed }) => {
+  return (
+    <div className="tx-app">
+      <Header />
+      <Switch>
+        <Route path="/" component={LoginPage} exact />
+        <Route path="/register" component={RegisterPage} />
+        <PrivateRoute path="/map" component={MapPage} isAuthed={isAuthed} />
+        <PrivateRoute
+          path="/profile"
+          component={ProfilePage}
+          isAuthed={isAuthed}
+        />
+        <Redirect to="/" />
+      </Switch>
+    </div>
+  );
 };
 
-export default connect(
-  state => ({ isLoggedIn: state.auth.isLoggedIn })
-)(App);
+const mapStateToProps = state => ({
+  isAuthed: state.user.isAuthed
+});
+
+export default connect(mapStateToProps)(App);
