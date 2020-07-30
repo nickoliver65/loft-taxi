@@ -1,4 +1,4 @@
-import baseUrl from './constants' 
+import baseUrl from "./constants.js";
 
 export const signUp = data =>
   fetch(baseUrl+'/register', {
@@ -10,7 +10,7 @@ export const signUp = data =>
   }).then(res => res.json());
 
 export const signIn = data =>
-  fetch(baseUrl+'auth', {
+  fetch(baseUrl+'/auth', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
