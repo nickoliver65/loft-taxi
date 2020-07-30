@@ -12,4 +12,4 @@ export const Registration = (props) => {
         </form>
     </>
 }
-//ex
+//ex 

@@ -16,7 +16,7 @@ describe('news reducer', () => {
     it('LOG_OUT', () => {
         const action = {
             type: LOG_OUT,
-        }
+        } 
 
         expect(reducer(initialState, action)).toEqual({
             ...initialState,

@@ -32,7 +32,7 @@ const Header = ({ logOutUser, isAuthed }) => {
     );
   } else return null;
 };
-
+ 
 const mapStateToProps = state => ({
   isAuthed: state.user.isAuthed
 });

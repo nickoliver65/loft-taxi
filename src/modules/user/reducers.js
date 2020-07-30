@@ -5,7 +5,7 @@ import {
   signUpUserSuccess,
   signUpUserError,
   signInUser,
-  signInUserSuccess,
+  signInUserSuccess, 
   signInUserError,
   logOutUser,
   updateProfileUser,

@@ -14,7 +14,7 @@ const route = handleActions(
   {
     [actions.getRouteMapSuccess]: (_state, action) => action.payload
   },
-  []
+  [] 
 );
 
 const mapError = handleActions(

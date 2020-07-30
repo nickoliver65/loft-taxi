@@ -10,6 +10,6 @@ const PrivateRoute = ({ isAuthed, component: Component, ...rest }) => {
       }
     />
   );
-};
+}; 
 
 export default PrivateRoute;

@@ -37,4 +37,4 @@ export const authMiddleware = (store) => (next) => async (action) => {
     store.dispatch(logFail());
     console.log(e)
   }
-};
+}; 

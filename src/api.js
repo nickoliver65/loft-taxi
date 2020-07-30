@@ -22,9 +22,9 @@ export const getAddresses = () =>
 export const getRoute = (address1, address2) =>
   fetch(
     'https://loft-taxi.glitch.me/route?address1=' +
-      address1 +
-      '&address2=' +
-      address2
+    address1 +
+    '&address2=' +
+    address2
   ).then(res => res.json());
 
 export const loadCard = token =>

@@ -5,7 +5,7 @@ import {DrawMenuLinks} from '../profile/Profile.jsx'
 export class Map extends Component {
     mapContainer = React.createRef();
     map = null;
-
+ 
     componentDidMount() {
         mapboxgl.accessToken =
             "pk.eyJ1Ijoibmlja29saXZlcjY1IiwiYSI6ImNrYzhvdzF4ejExb3AyeWxqeG1xM3Q0NXcifQ.DCsfzexnCYuBQvnY5IAt8w";

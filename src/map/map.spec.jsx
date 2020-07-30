@@ -7,4 +7,4 @@ describe("Map", () => {
         const { container } = render(<Map />)
         expect(container.innerHTML).toMatch('Карта')
     })
-})
+}) 

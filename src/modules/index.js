@@ -14,4 +14,4 @@ export const rootReducer = combineReducers({
 export function* rootSaga() {
   yield fork(userSagas);
   yield fork(mapSagas);
-}
+} 
