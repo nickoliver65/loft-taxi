@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { PropTypes } from 'prop-types'
-import { withAuth } from "../AuthContext";
+import { connect } from 'react-redux'
+import { authenticate } from '../actions'
+import { Link} from 'react-router-dom'
 
 export class Login extends Component {
     goToProfile = (event) => {
@@ -15,21 +17,22 @@ export class Login extends Component {
     authenticate = (event) => {
         event.preventDefault();
         const { email, password } = event.target;
-        this.props.logIn(email.value, password.value);
+        this.props.authenticate(email.value, password.value);
     };
 
     render() {
         return (
             <>
+            {this.props.isLoginFail && <div>Your login/password is not valid</div>}
                 {this.props.isLoggedIn ? (
                     <p>
                         Вы благополучно авторизовались{" "}
                         <div></div>
-                        <button onClick={this.goToProfile}>
-                            Продолжить
-            </button>
-                    </p>
-                ) : (
+                        <nav>
+                            <Link to="/map"><button>Продолжить</button></Link>
+                        </nav>     
+                    </p> 
+                ) : ( 
                         <form onSubmit={this.authenticate}>
                             <label htmlFor="email">Email:</label>
                             <input id="email" type="email" name="email" size="28" />
@@ -37,7 +40,7 @@ export class Login extends Component {
                             <input id="password" type="password" name="password" size="28" />
                             <button type="submit">Log in</button>
                             <div></div>
-                            <button onClick={this.goToRegistration} name='registration' type="registration">Зарегистрироваться</button>
+                            <Link to="/registration"><button name='registration' type="registration">Зарегистрироваться</button></Link>
                         </form>
                     )}
             </>
@@ -47,8 +50,14 @@ export class Login extends Component {
 
 Login.propTypes = {
     isLoggedIn: PropTypes.bool,
+    isLoginFail: PropTypes.bool,
     logIn: PropTypes.func,
     navigate: PropTypes.func,
+    authenticate: PropTypes.func,
+    LoginWithAuth: PropTypes.func
 };
 
-export const LoginWithAuth = withAuth(Login);
+export const LoginWithAuth = connect(
+    (state) => ({ isLoggedIn: state.auth.isLoggedIn,isLoginFail: state.auth.isLoginFail }),
+    { authenticate }
+)(Login)

@@ -6,7 +6,7 @@ describe("Login", () => {
     it("renders correctly", () => {
         const { container } = render(<Login />)
         expect(container.innerHTML).toMatch('Зарегистрироваться')
-    })
+    })  
 
     it('labels render correctly', () => {
         const { getByLabelText } = render(<Login />)
