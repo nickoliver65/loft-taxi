@@ -8,3 +8,4 @@ describe("Registration", () => {
         expect(container.innerHTML).toMatch('Регистрация')
     })
 })
+ 

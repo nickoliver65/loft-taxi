@@ -12,7 +12,7 @@ export const DrawMenuLinks = () => {
             <Link to="/map"><button>Map</button></Link>
             <Link to="/profile"><button>Profile</button></Link>
         </nav>
-    )
+    ) 
 }
 
 export class Profile extends Component {

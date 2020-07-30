@@ -31,8 +31,8 @@ export class Login extends Component {
                         <nav>
                             <Link to="/map"><button>Продолжить</button></Link>
                         </nav>     
-                    </p>
-                ) : (
+                    </p> 
+                ) : ( 
                         <form onSubmit={this.authenticate}>
                             <label htmlFor="email">Email:</label>
                             <input id="email" type="email" name="email" size="28" />

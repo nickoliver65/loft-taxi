@@ -13,9 +13,9 @@ jest.mock("./Profile", () => ({
 describe("App", () => {
   it("renders correctly", () => {
     const mockStore = {
-      getState: () => {},
-      subscribe: () => {},
-      dispatch: () => {},
+      getState: () => { },
+      subscribe: () => { },
+      dispatch: () => { },
     };
     const history = createMemoryHistory();
     const { container } = render(
@@ -32,8 +32,8 @@ describe("App", () => {
     it("opens the corresponding page", () => {
       const mockStore = {
         getState: () => ({ auth: { isLoggedIn: true } }),
-        subscribe: () => {},
-        dispatch: () => {},
+        subscribe: () => { },
+        dispatch: () => { },
       };
       const history = createMemoryHistory();
       const { container, getByText } = render(
